@@ -83,7 +83,7 @@ jobs:
       - name: Deploy with Docker Compose
         run: |
           export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
-          sed "s|YOUR_DOCKERHUB_USERNAME|${DOCKERHUB_USERNAME}|g" docker-compose.yml > docker-compose.deploy.yml
+          sed "s|yalinduniruj|${DOCKERHUB_USERNAME}|g" docker-compose.yml > docker-compose.deploy.yml
           docker compose -f docker-compose.deploy.yml up -d --force-recreate
 
       - name: Verify container is healthy
