@@ -1,0 +1,79 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 560px;
+}
+
+h1 { font-size: 28px; margin-bottom: 4px; }
+
+.subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }
+
+.add-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.add-form input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #1e293b;
+    color: #e2e8f0;
+}
+
+.add-form button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.task-list { list-style: none; }
+
+.task-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e293b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.task-list li.done .title { text-decoration: line-through; color: #64748b; }
+
+.task-list li.empty {
+    justify-content: center;
+    color: #64748b;
+}
+
+.meta { font-size: 11px; color: #64748b; margin: 0 10px; }
+
+.actions { display: flex; gap: 6px; }
+
+.actions button {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background: #334155;
+    color: #e2e8f0;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.actions .delete { background: #7f1d1d; }

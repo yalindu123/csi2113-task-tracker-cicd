@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Tracker | CSI2113</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Task Tracker</h1>
+        <p class="subtitle">Containerized Web App — CSI2113 Practical Assessment</p>
+
+        <form action="/add" method="POST" class="add-form">
+            <input type="text" name="title" placeholder="Add a new task..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li class="{{ 'done' if task.done else '' }}">
+                <span class="title">{{ task.title }}</span>
+                <span class="meta">{{ task.created }}</span>
+                <div class="actions">
+                    <form action="/complete/{{ task.id }}" method="POST">
+                        <button type="submit">{{ '↺ Undo' if task.done else '✓ Done' }}</button>
+                    </form>
+                    <form action="/delete/{{ task.id }}" method="POST">
+                        <button type="submit" class="delete">✕</button>
+                    </form>
+                </div>
+            </li>
+            {% else %}
+            <li class="empty">No tasks yet — add one above.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

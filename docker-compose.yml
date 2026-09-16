@@ -1,0 +1,16 @@
+services:
+  web:
+    # For local dev builds:
+    build: .
+    # For pulling the published image instead, comment out `build` above and use:
+    # image: YOUR_DOCKERHUB_USERNAME/csi2113-task-tracker:latest
+    image: YOUR_DOCKERHUB_USERNAME/csi2113-task-tracker:latest
+    container_name: csi2113-task-tracker
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
