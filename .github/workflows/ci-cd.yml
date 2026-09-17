@@ -85,3 +85,4 @@ jobs:
         run: |
           Start-Sleep -Seconds 5
           curl.exe -f http://localhost:5000/api/health
+           # trigger rebuild 
