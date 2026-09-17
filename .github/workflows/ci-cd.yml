@@ -77,7 +77,6 @@ jobs:
       - name: Deploy with Docker Compose
         shell: powershell
         run: |
-          $env:DOCKERHUB_USERNAME="${{ secrets.DOCKERHUB_USERNAME }}"
           docker compose down
           docker compose up -d --force-recreate
 
