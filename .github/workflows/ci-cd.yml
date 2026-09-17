@@ -2,44 +2,50 @@ name: CSI2113 CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ] # Or "master", depending on your default branch
+    branches: [ "main" ] # Triggers the pipeline when you push to the main branch
 
 jobs:
   build-test-deploy:
-    runs-on: self-hosted # Uses your Windows runner
+    # Uses your local self-hosted Windows runner
+    runs-on: self-hosted 
     
+    # ✅ FIX FOR POWERSHELL ERROR: 
+    # We define variables here at the job level so we don't need to use the Linux 'export' command.
     env:
-      # Use your actual Docker Hub credentials here
       DOCKERHUB_USERNAME: yalinduniruj
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       IMAGE_NAME: csi2113-task-tracker
 
     steps:
-      # 1. Checkout the code (This is where it downloads to that C:\Users\HP\... folder)
+      # 1. Git Version Control: Checkout the code from GitHub
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Build & Test the Application (Adjust if you use Node.js instead of Python)
-      - name: Build and Test
+      # 2. Build & Test: Install dependencies and run tests (Assuming Python)
+      - name: Build and Test Application
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -m unittest discover -s tests || echo "No tests found, skipping"
+          python -m unittest discover -s tests
 
-      # 3. Login to Docker Hub
+      # 3. Docker Hub: Login to your account
       - name: Login to Docker Hub
         run: docker login -u ${{ env.DOCKERHUB_USERNAME }} -p ${{ env.DOCKERHUB_TOKEN }}
 
-      # 4. Build Docker Image (Matches your docker-compose.yml image name)
+      # 4. Docker Containerisation: Build the image
       - name: Build Docker Image
         run: docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
 
-      # 5. Push Image to Docker Hub
+      # 5. Docker Hub: Push the image to the cloud registry
       - name: Push to Docker Hub
         run: docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
-      # 6. Deploy to Local Computer
+      # 6. Deploy to Local Computer: Run it on your machine using Docker Compose
       - name: Deploy to Local Computer
+        run: |
+          docker compose down
+          docker compose pull
+          docker compose up -d
         run: |
           # Stop the old container if it's running
           docker compose down || echo "No existing container to stop"
